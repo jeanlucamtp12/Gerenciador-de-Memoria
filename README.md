@@ -1,6 +1,6 @@
 # **Gerenciador de Memória projetado em linguagem de programação C.**
 
-Aluno: Jeanluca Martins de Abreu     |    Matrícula: ER05960
+-Aluno: Jeanluca Martins de Abreu     |    -Matrícula: ER05960
 
 ### **Descrição:**
 
