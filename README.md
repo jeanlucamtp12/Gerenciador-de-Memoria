@@ -16,8 +16,8 @@ Esse código foi desenvolvido para a disciplina de Sistemas Operacionais - SIN 3
 
 Para realizar a execução do algoritmo é necessário compilar e executar o código a partir dos seguintes comandos:
 
-• $ gcc -Wall vmm.c -o vmm (Compilação do Gerenciador de Memória).
-• $ ./vmm random 10 < anomaly.dat (Execução do Gerenciador de Memória 
+* $ gcc -Wall vmm.c -o vmm (Compilação do Gerenciador de Memória).
+* $ ./vmm random 10 < anomaly.dat (Execução do Gerenciador de Memória 
 
 **Observação:** substituir ./vmm pelo caminho onde se encontra o arquivo main.c
 
