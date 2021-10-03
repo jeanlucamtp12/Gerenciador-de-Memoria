@@ -23,3 +23,4 @@ Para realizar a execução do algoritmo é necessário compilar e executar o có
 ** **Observação:** ** substituir ./vmm pelo caminho onde se encontra o arquivo main.c
 
 
+ 
