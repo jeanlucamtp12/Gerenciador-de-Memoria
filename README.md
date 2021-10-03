@@ -1,4 +1,4 @@
-**Gerenciador de Memória criado em linguagem de programação C.**
+### **Gerenciador de Memória criado em linguagem de programação C.**
 
 Aluno: Jeanluca Martins de Abreu 
 Matrícula: ER05960
@@ -13,7 +13,7 @@ Esse código foi desenvolvido para a disciplina de Sistemas Operacionais - SIN 3
 • Aging (Envelhecimento);
 • Random (já implementado)
 
-###**Como Executar:**
+### **Como Executar:**
 
 Para realizar a execução do algoritmo é necessário compilar e executar o código a partir dos seguintes comandos:
 
