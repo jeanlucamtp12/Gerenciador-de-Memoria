@@ -5,11 +5,11 @@
 #include <time.h>
 #include <stdint.h>
 
-// Campos da tabela de p·ginas
+// Campos da tabela de p√°ginas
 #define PT_FIELDS 6           // 4 campos na tabela
-#define PT_FRAMEID 0          // EndereÁo da memÛria fÌsica
-#define PT_MAPPED 1           // EndereÁo presente na tabela
-#define PT_DIRTY 2            // P·gina dirty
+#define PT_FRAMEID 0          // Endere√ßo da mem√≥ria f√≠sica
+#define PT_MAPPED 1           // Endere√ßo presente na tabela
+#define PT_DIRTY 2            // P√°gina dirty
 #define PT_REFERENCE_BIT 3    // Bit de referencia
 #define PT_REFERENCE_MODE 4   // Tipo de acesso, converter para char
 #define PT_AGING_COUNTER 5    // Contador para aging
@@ -18,7 +18,7 @@
 #define READ 'r'
 #define WRITE 'w'
 
-// Define a funÁ„o que simula o algoritmo da polÌtica de subst.
+// Define a fun√ß√£o que simula o algoritmo da pol√≠tica de subst.
 typedef int (*eviction_f)(int8_t**, int, int, int, int, int);
 
 typedef struct {
@@ -26,22 +26,22 @@ typedef struct {
     void *function;
 } paging_policy_t;
 
-// Codifique as reposiÁıes a partir daqui!
-// Cada mÈtodo abaixo retorna uma p·gina para ser trocada. Note tambÈm
+// Codifique as reposi√ß√µes a partir daqui!
+// Cada m√©todo abaixo retorna uma p√°gina para ser trocada. Note tamb√©m
 // que cada algoritmo recebe:
-// - A tabela de p·ginas
+// - A tabela de p√°ginas
 // - O tamanho da mesma
-// - A ˙ltima p·gina acessada
+// - A √∫ltima p√°gina acessada
 // - A primeira modura acessada (para fifo)
-// - O n˙mero de molduras
-// - Se a ˙ltima instruÁ„o gerou um ciclo de clock
+// - O n√∫mero de molduras
+// - Se a √∫ltima instru√ß√£o gerou um ciclo de clock
 //
-// Adicione mais par‚metros caso ache necess·rio
+// Adicione mais par√¢metros caso ache necess√°rio
 
 int fifo(int8_t** page_table, int num_pages, int prev_page,
          int fifo_frm, int num_frames, int clock) {
          	      	
-    //Verifica se o endereÁo de memoria È igual a moldura de pagina, caso seja retorna a pagina em quest„o         	
+    //Verifica se o endere√ßo de memoria √© igual a moldura de pagina, caso seja retorna a pagina em quest√£o         	
     for (int i = 0; i < num_pages; i++){
         if ( page_table[i][PT_FRAMEID] == fifo_frm){
           return i;
@@ -52,18 +52,18 @@ int fifo(int8_t** page_table, int num_pages, int prev_page,
 
 int second_chance(int8_t** page_table, int num_pages, int prev_page,
                   int fifo_frm, int num_frames, int clock) {
-    //laÁos for para percorrer a tabela             	
+    //la√ßos for para percorrer a tabela             	
     for (int i = 0; i < num_pages; i++){
     	for(int j = 0; j < num_pages; j++){
-    		//verifica se i e j est„o na mesmo endereÁo de memoria 
+    		//verifica se i e j est√£o na mesmo endere√ßo de memoria 
     	    if (page_table[j][PT_FRAMEID] == i){
-    	    	//verifica se o bit R È igual a 0, caso seja retorna a pagina a ser removida
+    	    	//verifica se o bit R √© igual a 0, caso seja retorna a pagina a ser removida
     		    if (page_table[j][PT_REFERENCE_BIT] == 0){
     		    	return j;
                 }else{
-                	//caso contrario, d· uma segunda chance e atualiza o valor do bit de referencia para 0
+                	//caso contrario, d√° uma segunda chance e atualiza o valor do bit de referencia para 0
                	    page_table[j][PT_REFERENCE_BIT] = 0;
-               	   	//realiza a atualizaÁ„o da ultima pagina acessada (prev_page)
+               	   	//realiza a atualiza√ß√£o da ultima pagina acessada (prev_page)
     		        prev_page = j;
     		        break;
 	         	}   		
@@ -79,10 +79,10 @@ int nru(int8_t** page_table, int num_pages, int prev_page,
 {
     for(int i = 0; i < num_pages; i++)
     {
-    	//verifica se o endereÁo est· presente na tabela
+    	//verifica se o endere√ßo est√° presente na tabela
         if(page_table[i][PT_MAPPED] !=0)
         {
-        	//verifica se o bit M e bit R s„o iguais a zero, caso seja a pagina a ser removida foi encontrada 
+        	//verifica se o bit M e bit R s√£o iguais a zero, caso seja a pagina a ser removida foi encontrada 
             if(page_table[i][PT_REFERENCE_BIT] == 0 && page_table[i][PT_DIRTY] == 0)
             {
                 return i;
@@ -90,7 +90,7 @@ int nru(int8_t** page_table, int num_pages, int prev_page,
         }
     }
 
-    //realiza o mesmo procedimento acima, porÈm verificando as demais classes possiveis 
+    //realiza o mesmo procedimento acima, por√©m verificando as demais classes possiveis 
     for(int i = 0; i < num_pages; i++)
     {
         if(page_table[i][PT_MAPPED] !=0)
@@ -132,21 +132,17 @@ int aging(int8_t** page_table, int num_pages, int prev_page,
    
     int menor = 0, cont = 0, pos = 0;
 
-    while(cont != num_pages)
-    {
-    	//verifica se o endereÁo est· presente na tabela, caso n„o esteja incrementa o contador para a proxima interaÁ„o 
+    while(cont != num_pages){
+    	//verifica se o endere√ßo est√° presente na tabela, caso n√£o esteja incrementa o contador para a proxima intera√ß√£o 
         if(page_table[cont][PT_MAPPED] == 0){
-        	cont++;
-        	
-		}else{
-			// a variavel pos, pega a primeira posiÁ„o de um endereÁo valido, com base a variavel menor recebe o argumento do contador sempre que encontrar um valor menor ao anteriormente informado 
+        	cont++;	
+	}else{
+	    // a variavel pos pega a primeira posi√ß√£o de um endere√ßo valido, com base nisso a variavel menor recebe o argumento do contador sempre que encontrar um valor menor ao anteriormente informado 
             pos ++;
-            if(pos == 1) 
-            {
+            if(pos == 1){
                 menor = cont;
             }
-            if(page_table[menor][PT_AGING_COUNTER] > page_table[cont+1][PT_AGING_COUNTER])
-            {
+            if(page_table[menor][PT_AGING_COUNTER] > page_table[cont+1][PT_AGING_COUNTER]){
                 menor=cont;
             }
             cont++;
@@ -159,7 +155,7 @@ int aging(int8_t** page_table, int num_pages, int prev_page,
 int random_page(int8_t** page_table, int num_pages, int prev_page,
                 int fifo_frm, int num_frames, int clock) {
     int page = rand() % num_pages;
-    while (page_table[page][PT_MAPPED] == 0) // Encontra p·gina mapeada
+    while (page_table[page][PT_MAPPED] == 0) // Encontra p√°gina mapeada
         page = rand() % num_pages;
     return page;
 }
@@ -172,8 +168,8 @@ int find_next_frame(int *physical_memory, int *num_free_frames,
         return -1;
     }
 
-    // Procura por um frame livre de forma circula na memÛria.
-    // N„o È muito eficiente, mas fazer um hash em C seria mais custoso.
+    // Procura por um frame livre de forma circula na mem√≥ria.
+    // N√£o √© muito eficiente, mas fazer um hash em C seria mais custoso.
     do {
         *prev_free = (*prev_free + 1) % num_frames;
     } while (physical_memory[*prev_free] == 1);
@@ -196,13 +192,13 @@ int simulate(int8_t **page_table, int num_pages, int *prev_page, int *fifo_frm,
     }
 
     int next_frame_addr;
-    if ((*num_free_frames) > 0) { // Ainda temos memÛria fÌsica livre!
+    if ((*num_free_frames) > 0) { // Ainda temos mem√≥ria f√≠sica livre!
         next_frame_addr = find_next_frame(physical_memory, num_free_frames,
                                           num_frames, prev_free);
         if (*fifo_frm == -1)
             *fifo_frm = next_frame_addr;
         *num_free_frames = *num_free_frames - 1;
-    } else { // Precisamos liberar a memÛria!
+    } else { // Precisamos liberar a mem√≥ria!
         assert(*num_free_frames == 0);
         int to_free = evict(page_table, num_pages, *prev_page, *fifo_frm,
                             num_frames, clock);
@@ -221,7 +217,7 @@ int simulate(int8_t **page_table, int num_pages, int *prev_page, int *fifo_frm,
         page_table[to_free][PT_AGING_COUNTER] = 0;
     }
 
-    // Coloca endereÁo fÌsico na tabela de p·ginas!
+    // Coloca endere√ßo f√≠sico na tabela de p√°ginas!
     int8_t *page_table_data = page_table[virt_addr];
     page_table_data[PT_FRAMEID] = next_frame_addr;
     page_table_data[PT_MAPPED] = 1;
@@ -286,7 +282,7 @@ int main(int argc, char **argv) {
     int num_frames;
     read_header(&num_pages, &num_frames);
 
-    // Aponta para cada funÁ„o que realmente roda a polÌtica de parse
+    // Aponta para cada fun√ß√£o que realmente roda a pol√≠tica de parse
     paging_policy_t policies[] = {
             {"fifo", *fifo},
             {"second_chance", *second_chance},
@@ -309,7 +305,7 @@ int main(int argc, char **argv) {
         exit(1);
     }
 
-    // Aloca tabela de p·ginas
+    // Aloca tabela de p√°ginas
     int8_t **page_table = (int8_t **) malloc(num_pages * sizeof(int8_t*));
     for (int i = 0; i < num_pages; i++) {
         page_table[i] = (int8_t *) malloc(PT_FIELDS * sizeof(int8_t));
@@ -321,8 +317,8 @@ int main(int argc, char **argv) {
         page_table[i][PT_AGING_COUNTER] = 0;
     }
 
-    // MemÛria Real È apenas uma tabela de bits (na verdade uso ints) indicando
-    // quais frames/molduras est„o livre. 0 == livre!
+    // Mem√≥ria Real √© apenas uma tabela de bits (na verdade uso ints) indicando
+    // quais frames/molduras est√£o livre. 0 == livre!
     int *physical_memory = (int *) malloc(num_frames * sizeof(int));
     for (int i = 0; i < num_frames; i++) {
         physical_memory[i] = 0;
