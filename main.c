@@ -77,48 +77,36 @@ int second_chance(int8_t** page_table, int num_pages, int prev_page,
 int nru(int8_t** page_table, int num_pages, int prev_page,
         int fifo_frm, int num_frames, int clock)
 {
-    for(int i = 0; i < num_pages; i++)
-    {
+    for(int i = 0; i < num_pages; i++){
     	//verifica se o endereço está presente na tabela
-        if(page_table[i][PT_MAPPED] !=0)
-        {
+        if(page_table[i][PT_MAPPED] !=0){
         	//verifica se o bit M e bit R são iguais a zero, caso seja a pagina a ser removida foi encontrada 
-            if(page_table[i][PT_REFERENCE_BIT] == 0 && page_table[i][PT_DIRTY] == 0)
-            {
+            if(page_table[i][PT_REFERENCE_BIT] == 0 && page_table[i][PT_DIRTY] == 0){
                 return i;
             }
         }
     }
 
     //realiza o mesmo procedimento acima, porém verificando as demais classes possiveis 
-    for(int i = 0; i < num_pages; i++)
-    {
-        if(page_table[i][PT_MAPPED] !=0)
-        {
-            if(page_table[i][PT_REFERENCE_BIT] == 0 && page_table[i][PT_DIRTY] == 1)
-            {
+    for(int i = 0; i < num_pages; i++){
+        if(page_table[i][PT_MAPPED] !=0){
+            if(page_table[i][PT_REFERENCE_BIT] == 0 && page_table[i][PT_DIRTY] == 1){
                 return i;
             }
         }
     }
 
-    for(int i = 0; i < num_pages; i++)
-    {
-        if(page_table[i][PT_MAPPED] !=0)
-        {
-            if(page_table[i][PT_REFERENCE_BIT] == 1 && page_table[i][PT_DIRTY] == 0)
-            {
+    for(int i = 0; i < num_pages; i++){
+        if(page_table[i][PT_MAPPED] !=0){
+            if(page_table[i][PT_REFERENCE_BIT] == 1 && page_table[i][PT_DIRTY] == 0){
                 return i;
             }
         }
     }
 
-    for(int i = 0; i < num_pages; i++)
-    {
-        if(page_table[i][PT_MAPPED] !=0)
-        {
-            if(page_table[i][PT_REFERENCE_BIT] == 1 && page_table[i][PT_DIRTY] == 1)
-            {
+    for(int i = 0; i < num_pages; i++){
+        if(page_table[i][PT_MAPPED] !=0){
+            if(page_table[i][PT_REFERENCE_BIT] == 1 && page_table[i][PT_DIRTY] == 1){
                 return i;
             }
         }
@@ -135,11 +123,12 @@ int aging(int8_t** page_table, int num_pages, int prev_page,
     while(cont != num_pages){
     	//verifica se o endereço está presente na tabela, caso não esteja incrementa o contador para a proxima interação 
         if(page_table[cont][PT_MAPPED] == 0){
-        	cont++;	
+        	cont++;
+        	
 	}else{
 	    // a variavel pos pega a primeira posição de um endereço valido, com base nisso a variavel menor recebe o argumento do contador sempre que encontrar um valor menor ao anteriormente informado 
             pos ++;
-            if(pos == 1){
+            if(pos == 1) {
                 menor = cont;
             }
             if(page_table[menor][PT_AGING_COUNTER] > page_table[cont+1][PT_AGING_COUNTER]){
