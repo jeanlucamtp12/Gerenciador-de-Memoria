@@ -11,7 +11,7 @@ Esse código foi desenvolvido para a disciplina de Sistemas Operacionais - SIN 3
 * FIFO + Bit R (Segunda Chance);
 * NRU;
 * Aging (Envelhecimento);
-* Random (já implementado)
+* Random 
 
 ### **Como Executar:**
 
