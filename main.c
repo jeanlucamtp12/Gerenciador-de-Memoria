@@ -55,7 +55,7 @@ int second_chance(int8_t** page_table, int num_pages, int prev_page,
     //laços for para percorrer a tabela             	
     for (int i = 0; i < num_pages; i++){
     	for(int j = 0; j < num_pages; j++){
-    		//verifica se i e j estão na mesmo endereço de memoria 
+    		//verifica se i e j estão no mesmo endereço de memoria 
     	    if (page_table[j][PT_FRAMEID] == i){
     	    	//verifica se o bit R é igual a 0, caso seja retorna a pagina a ser removida
     		    if (page_table[j][PT_REFERENCE_BIT] == 0){
@@ -80,7 +80,7 @@ int nru(int8_t** page_table, int num_pages, int prev_page,
     for(int i = 0; i < num_pages; i++){
     	//verifica se o endereço está presente na tabela
         if(page_table[i][PT_MAPPED] !=0){
-        	//verifica se o bit M e bit R são iguais a zero, caso seja a pagina a ser removida foi encontrada 
+        	//verifica se o bit M e bit R são iguais a zero, caso seja a pagina a ser removida foi encontrada, ocorre o retorno
             if(page_table[i][PT_REFERENCE_BIT] == 0 && page_table[i][PT_DIRTY] == 0){
                 return i;
             }
@@ -124,7 +124,7 @@ int aging(int8_t** page_table, int num_pages, int prev_page,
         if(page_table[cont][PT_MAPPED] == 0){
         	cont++;
 		}else{
-			// a variavel pos, pega a primeira posição de um endereço valido, com base a variavel menor recebe o argumento do contador sempre que encontrar um valor menor ao anteriormente informado 
+			// a variavel pos pega a primeira posição de um endereço valido, com base nisso a variavel menor recebe o argumento do contador sempre que encontrar um valor menor ao anteriormente informado 
             pos ++;
             if(pos == 1) {
                 menor = cont;
