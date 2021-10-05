@@ -75,8 +75,8 @@ int second_chance(int8_t** page_table, int num_pages, int prev_page,
 }
 
 int nru(int8_t** page_table, int num_pages, int prev_page,
-        int fifo_frm, int num_frames, int clock)
-{
+        int fifo_frm, int num_frames, int clock){
+        	
     for(int i = 0; i < num_pages; i++){
     	//verifica se o endereço está presente na tabela
         if(page_table[i][PT_MAPPED] !=0){
@@ -115,8 +115,7 @@ int nru(int8_t** page_table, int num_pages, int prev_page,
 }       	
 
 int aging(int8_t** page_table, int num_pages, int prev_page,
-          int fifo_frm, int num_frames, int clock)
-{
+          int fifo_frm, int num_frames, int clock){
    
     int menor = 0, cont = 0, pos = 0;
 
@@ -124,9 +123,8 @@ int aging(int8_t** page_table, int num_pages, int prev_page,
     	//verifica se o endereço está presente na tabela, caso não esteja incrementa o contador para a proxima interação 
         if(page_table[cont][PT_MAPPED] == 0){
         	cont++;
-        	
-	}else{
-	    // a variavel pos pega a primeira posição de um endereço valido, com base nisso a variavel menor recebe o argumento do contador sempre que encontrar um valor menor ao anteriormente informado 
+		}else{
+			// a variavel pos, pega a primeira posição de um endereço valido, com base a variavel menor recebe o argumento do contador sempre que encontrar um valor menor ao anteriormente informado 
             pos ++;
             if(pos == 1) {
                 menor = cont;
@@ -142,7 +140,7 @@ int aging(int8_t** page_table, int num_pages, int prev_page,
 }
 
 int random_page(int8_t** page_table, int num_pages, int prev_page,
-                int fifo_frm, int num_frames, int clock) {
+                int fifo_frm, int num_frames, int clock){
     int page = rand() % num_pages;
     while (page_table[page][PT_MAPPED] == 0) // Encontra página mapeada
         page = rand() % num_pages;
