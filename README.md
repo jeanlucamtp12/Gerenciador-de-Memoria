@@ -20,7 +20,8 @@ Para realizar a execução do algoritmo é necessário compilar e executar o có
 * $ gcc -Wall vmm.c -o vmm (Compilação do Gerenciador de Memória).
 * $ ./vmm random 10 < anomaly.dat (Execução do Gerenciador de Memória 
 
-**Observação:** substituir ./vmm pelo caminho onde se encontra o arquivo main.c e informar a função que será executada, exemplo: C:/Users/-/Desktop/main.exe fifo 10 < C:/Users/-/Desktop/anomaly.dat
+**Observação:** substituir ./vmm pelo caminho onde se encontra o arquivo main.c e informar a função que será executada.
+**Exemplo:** C:/Users/-/Desktop/main.exe fifo 10 < C:/Users/-/Desktop/anomaly.dat
 
 
  
